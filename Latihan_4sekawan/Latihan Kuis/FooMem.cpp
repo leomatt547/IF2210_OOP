@@ -71,5 +71,41 @@ bool FooMem::IsFull() const{
 }
 
 void FooMem::Add(int x){
-    
+    int kiri = (this->Left)-(-1);
+    int kanan = (this->Size)-(this->Right);
+    if(!IsFull()){
+        if(!IsFull() && (kanan>kiri)){
+            Mem[(this->Left)+1] = x;
+            (this->Left)++;
+        }else{
+            Mem[(this->Right)-1];
+            (this->Right)--;
+        }
+    }
+}
+
+int FooMem::Del(){
+    int kiri = (this->Left)-(-1);
+    int kanan = (this->Size)-(this->Right);
+    if(!IsEmpty()){
+        if(!IsFull() && (kanan>kiri)){
+            Mem[(this->Left)+1] = 0;
+            (this->Left)--;
+        }else{
+            Mem[(this->Right)-1];
+            (this->Right)++;
+        }
+    }
+}
+
+void FooMem::PrintAll(){
+    int i;
+    if (this->IsEmpty()){
+        cout << "Tidak ada elemen" << endl;
+    }else{
+        for (i = 0; i<this->Size; i++){
+            cout << "| " << this->Mem[i] << " |";
+        }
+        cout << "" << endl;
+    }
 }

@@ -25,13 +25,13 @@ class FooMem{
     FooMem& operator=(FooMem& F);
 
     //Fungsi
-    int GetLeft();
     //Mengembalikan Posisi Mem yang terisi terakhir di kiri
-    int GetRight();
+    int GetLeft();
     //Mengembalikan Posisi Mem yang terisi terakhir di kanan
+    int GetRight();
 
     //Predikat Kosong
-    bool IsEMpty() const;
+    bool IsEmpty() const;
     //Predikat Penuh
     bool IsFull() const;
 
@@ -39,5 +39,7 @@ class FooMem{
     void Add(int x); //Menambahkan x ke Mem dengan aturan yang dijelaskan
     //Del
     int Del(); //Menghapus elemen FooMem sesuai aturan
+    //PrintAll
+    void PrintAll();
 };
 #endif
