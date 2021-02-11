@@ -1,31 +1,31 @@
-/*new empty box 2
-new empty box with default id 0
-new empty box 1
-assign box 0 <- 2
-copy box 1
-box 2
-box 1
-destroy box 2
-destroy box 1
-destroy box 1
-destroy box 2*/
-
-#include "Box.hpp"
-
-using namespace std;
+//Nama : Leonard Matheus
+//NIM : 13519215
+//Topik : Praktikum 1
+#include "A.hpp"
+#include <iostream>
 
 int main(int argc, char const *argv[])
 {
-    Box * b1 = new Box(2);
-    Box * b2 = new Box();
-    Box * b3 = new Box(1);
-    (*b2) = (*b1);
-    Box * b4 = new Box(*b3);
-    b1->peek();
-    b3->peek();
-    delete b1;
-    delete b3;
-    delete b4;
+    A * a = new A(1);
+    A * b = new A(2);
+    A * c = new A(3);
+    A * d = new A(4);
+    *c = *a; //ingat, c jadi '1'
+    A * e = new A(5);
+    *d = *e; //ingat, d jadi '5'
+    delete e;
+    A * f = new A(6);
+    A * g = new A(*d); //g jadi 5 lagi
+    A * b2 = new A(*b);
+    *b2 = *f; //ingat b2 jadi 6;
+    *a = *g; //ingat a jadi '5'
+    b->show();
+    delete b;
+    delete d;
     delete b2;
+    delete a;
+    delete c;
+    delete f;
+    delete g;
     return 0;
 }
