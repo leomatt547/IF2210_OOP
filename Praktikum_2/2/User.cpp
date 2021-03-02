@@ -2,82 +2,110 @@
 //NIM : 13519215
 //Topik : Praktikum 2
 
-#include <iostream>
 #include "User.h"
+#include <iostream>
 
 using namespace std;
 
+#define N_MAX_MUSIC_LIST 1000
+#define NULL_SONG "EMPTY"
+
 int User::n_user = 0;
 
-User::User(char* name){
-    this->name = name;
+// ctor, parameter: nama pengguna
+User::User(char* name) {
+    this->name = new char[strlen(name)];
+    strcpy(this->name, name);
     this->num_of_favourite_music = 0;
-    music_list = new char*[100];
-    for (int i = 0; i<100; i++){
-        music_list[i] = "NULL";
+    this->music_list = new char* [N_MAX_MUSIC_LIST];
+    for (int i = 0; i < N_MAX_MUSIC_LIST; i++) {
+        this->music_list[i] = new char[strlen(NULL_SONG)];
+        strcpy(this->music_list[i], NULL_SONG);
     }
+
+    n_user++;
 }
 
-User::User(const User& user){
-    this->name = user.name;
-    this->num_of_favourite_music = user.num_of_favourite_music;
-    this->music_list = user.music_list;
-    n_user += 1;
+// cctor
+User::User(const User& u) {
+    this->name = new char[strlen(u.name)];
+    strcpy(this->name, u.name);
+    this->num_of_favourite_music = u.num_of_favourite_music;
+    this->music_list = new char* [N_MAX_MUSIC_LIST];
+    for (int i = 0; i < N_MAX_MUSIC_LIST; i++) {
+        this->music_list[i] = new char[strlen(NULL_SONG)];
+        strcpy(this->music_list[i], u.music_list[i]);
+    }
+
+    n_user++;
 }
 
-User::~User(){
-    this->num_of_favourite_music = 0;
-    n_user -= 1;
-    cout << "User "<<this->name<<" deleted"<<endl;
+// dtor
+// selain implementasi, print juga "User <nama user> deleted<endl>"
+// Contoh:
+// User A deleted
+//
+User::~User() {
+    cout << "User " << this->name << " deleted" << endl;
+    n_user--;
 }
 
-void User::addFavouriteMusic(char* judul){
-    for (int i = 0; i<100; i++){
-        if (music_list[i] == "NULL"){
-            music_list[i] = judul;
+// Asumsi: musik unik, parameter: judul musik
+void User::addFavouriteMusic(char* song) {
+    for (int i = 0; i < N_MAX_MUSIC_LIST; i++) {
+        if (strcmp(this->music_list[i], NULL_SONG) == 0)
+        {
+            this->music_list[i] = new char[strlen(song)];
+            strcpy(this->music_list[i], song);
+            break;
+        }
+    }
+
+    this->num_of_favourite_music++;
+}
+
+void User::deleteFavouriteMusic(char* song) {
+    for (int i = 0; i < N_MAX_MUSIC_LIST; i++) {
+        if (strcmp(this->music_list[i], song) == 0) {
+            strcpy(this->music_list[i], NULL_SONG);
+            this->num_of_favourite_music--;
             break;
         }
     }
 }
 
-void User::deleteFavouriteMusic(char* judul){
-    for (int i = 0; i<100; i++){
-        if (music_list[i] == judul){
-            music_list[i] = "NULL";
-            break;
-        }
-    }
+void User::setName(char* newName) {
+    strcpy(this->name, newName);
 }
 
-void User::setName(char* namanya){
-    this->name = namanya;
-}
-
-char* User::getName() const{
+char* User::getName() const {
     return this->name;
 }
 
-int User::getNumOfFavouriteMusic() const{
-    int i = 0;
-    int total = 0;
-    while ((this->music_list[i]!="NULL")&&(i<100)){
-        total++;
-    }
-    return total;
+int User::getNumOfFavouriteMusic() const {
+    return this->num_of_favourite_music;
 }
 
-void User::viewMusicList() const{
-    if (User::getNumOfFavouriteMusic() == 0){
-        cout << "No music in your favourite list" << endl;
-    }else{
-        int nomor = 1;
-        for(int i = 0; i < User::getNumOfFavouriteMusic() ; i++){
-            cout <<nomor<<". "<<music_list[i] << endl;
-            nomor++;
+// format print:
+// <No>. <Judul musik><endl>
+// contoh:
+// 1. Starship - Nicki Minaj
+// 2. To Be Human - Sia, Labrinth
+//
+// jika tidak ada musik, print: "No music in your favourite list<endl>"
+void User::viewMusicList() const {
+    int j = 0;
+    for (int i = 0; i < N_MAX_MUSIC_LIST; i++) {
+        if (strcmp(this->music_list[i], NULL_SONG) != 0) {
+            j++;
+            cout << j << ". " << this->music_list[i] << endl;
         }
     }
+
+    if (j == 0)
+        cout << "No music in your favourite list" << endl;
 }
 
-int User::getNumOfUser(){
-    return User::n_user;
+int User::getNumOfUser() {
+    return n_user;
 }

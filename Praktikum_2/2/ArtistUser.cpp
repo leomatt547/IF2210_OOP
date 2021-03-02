@@ -7,65 +7,91 @@
 
 using namespace std;
 
+#define N_MAX_UPLOADED_MUSIC_LIST 1000
+#define NULL_SONG "EMPTY"
+
 int ArtistUser::num_of_artist = 0;
 
-ArtistUser::ArtistUser(char* nama): User::User(nama){
+//ctor, parameter: nama pengguna
+ArtistUser::ArtistUser(char* name) : User(name) {
     this->num_of_music_uploaded = 0;
-    uploaded_music_list = new char*[100];
-    for (int i = 0; i<100; i++){
-        uploaded_music_list[i] = "NULL";
+    this->uploaded_music_list = new char* [N_MAX_UPLOADED_MUSIC_LIST];
+    for (int i = 0; i < N_MAX_UPLOADED_MUSIC_LIST; i++) {
+        this->uploaded_music_list[i] = new char[strlen(NULL_SONG)];
+        strcpy(uploaded_music_list[i], NULL_SONG);
     }
+
     num_of_artist++;
 }
 
-ArtistUser::ArtistUser(const ArtistUser& a): User::User(a){
-    this->num_of_artist = a.num_of_artist;
-    this->uploaded_music_list = a.uploaded_music_list;
+// cctor
+ArtistUser::ArtistUser(const ArtistUser& au) : User(au.name) {
+    this->num_of_music_uploaded = au.num_of_music_uploaded;
+    this->uploaded_music_list = new char* [N_MAX_UPLOADED_MUSIC_LIST];
+    for (int i = 0; i < N_MAX_UPLOADED_MUSIC_LIST; i++) {
+        this->uploaded_music_list[i] = new char[strlen(NULL_SONG)];
+        strcpy(this->uploaded_music_list[i], au.uploaded_music_list[i]);
+    }
+
     num_of_artist++;
 }
 
-ArtistUser::~ArtistUser(){
-    /*this->num_of_music_uploaded = 0;
-    cout << "Artist User "<<this->name<<" deleted"<<endl;
-    num_of_artist--;*/
+// dtor
+// selain implementasi, print juga "Artist user <nama user> deleted"
+// Contoh:
+// Artist user A deleted
+ArtistUser::~ArtistUser() {
+    cout << "Artist user " << this->name << " deleted" << endl;
 }
 
-void ArtistUser::uploadMusic(char* judul){
-    for (int i = 0; i<100; i++){
-        if (uploaded_music_list[i] == "NULL"){
-            uploaded_music_list[i] = judul;
+// Asumsi: musik unik, parameter: judul musik
+void ArtistUser::uploadMusic(char* song) {
+    for (int i = 0; i < N_MAX_UPLOADED_MUSIC_LIST; i++) {
+        if (strcmp(this->uploaded_music_list[i], NULL_SONG) == 0) {
+            this->uploaded_music_list[i] = new char[strlen(song)];
+            strcpy(this->uploaded_music_list[i], song);
+            break;
+        }
+    }
+
+    this->num_of_music_uploaded++;
+}
+
+void ArtistUser::deleteUploadedMusic(char* song) {
+    for (int i = 0; i < N_MAX_UPLOADED_MUSIC_LIST; i++) {
+        if (strcmp(this->uploaded_music_list[i], song) == 0) {
+            strcpy(this->uploaded_music_list[i], NULL_SONG);
+            this->num_of_music_uploaded--;
             break;
         }
     }
 }
-void ArtistUser::deleteUploadedMusic(char* judul){
-    for (int i = 0; i<100; i++){
-        if (uploaded_music_list[i] == judul){
-            uploaded_music_list[i] = "NULL";
-            break;
+
+// format print:
+// <No>. <Judul musik><endl>
+// contoh:
+// 1. Starship - Nicki Minaj
+// 2. To Be Human - Sia, Labrinth
+//
+// jika tidak ada musik, print: "No music uploaded<endl>"
+void ArtistUser::viewUploadedMusicList() const {
+    int j = 0;
+    for (int i = 0; i < N_MAX_UPLOADED_MUSIC_LIST; i++)
+    {
+        if (strcmp(this->uploaded_music_list[i], NULL_SONG) != 0) {
+            j++;
+            cout << j << ". " << this->uploaded_music_list[i] << endl;
         }
     }
-}
-void ArtistUser::viewUploadedMusicList() const{
-    if (ArtistUser::getNumOfMusicUploaded() == 0){
+
+    if (j == 0)
         cout << "No music uploaded" << endl;
-    }else{
-        int nomor = 1;
-        for(int i = 0; i < ArtistUser::getNumOfMusicUploaded() ; i++){
-            cout <<nomor<<". "<<uploaded_music_list[i] << endl;
-            nomor++;
-        }
-    }
 }
-int ArtistUser::getNumOfMusicUploaded() const{
-    int i = 0;
-    int total = 0;
-    while ((this->uploaded_music_list[i]!="NULL")&&(i<100)){
-        total++;
-    }
-    return total;
+
+int ArtistUser::getNumOfMusicUploaded() const {
+    return this->num_of_music_uploaded;
 }
 
 int ArtistUser::getNumOfArtist() {
-    return ArtistUser::num_of_artist;
+    return num_of_artist;
 }
