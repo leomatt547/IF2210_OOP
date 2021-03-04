@@ -3,6 +3,7 @@
 Car::Car(){
     this->passenger_count = 0;
     this->passengers = new string[4];
+    this->position = new Coordinate();
     cout << "construct" << endl;
 }
 
@@ -12,6 +13,8 @@ Car::Car(const Car& c){
     for (int i = 0; i < 4; i++){
         passengers[i] = c.passengers[i];
     }
+    delete position;
+    position = new Coordinate(*c.position);
     cout << "copy construct" << endl;
 }
 
@@ -20,15 +23,18 @@ void Car::operator=(const Car& c){
     for (int i = 0; i < 4; i++){
         passengers[i] = c.passengers[i];
     }
+    delete position;
+    position = new Coordinate(*c.position);
     cout << "assignment" << endl;
 }
 
 Car::~Car(){
     delete[] passengers;
+    delete position;
     cout << "destruct" << endl;
 }
 
-void Car::drive() const{
+void Car::drive(const Coordinate& destination){
     print_sound();
     cout << "driving with " << passenger_count << endl;
     for( int i = 0; i < 4; i++){
@@ -36,6 +42,10 @@ void Car::drive() const{
             cout << "- " << passengers[i] << endl;
         }
     }
+    delete position;
+    position = new Coordinate(destination);
+    cout << "arrived at ";
+    cout << position->get_x() << "," << position->get_y() << endl;
 }
 
 void Car::get_in(string name, int pos){
