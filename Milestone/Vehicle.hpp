@@ -7,30 +7,34 @@
 
 using namespace std;
 
+template <class T>
 class Vehicle{
     public:
         Vehicle();
-        Vehicle(const Vehicle& c);
-        void operator=(const Vehicle& c);
+        Vehicle(const Vehicle<T>& c);
+        void operator=(const Vehicle<T>& c);
         ~Vehicle();
 
-        virtual void drive(const Coordinate& destination) = 0;
+        virtual void drive(const Coordinate<T>& destination) = 0;
         void get_in(string name, int pos);
         int drop_all();        
 };
 
+template <class T>
 class Drivable{
     public:
-        virtual void drive(const Coordinate& destination) = 0;
+        virtual void drive(const Coordinate<T>& destination) = 0;
 };
 
+template <class T>
 class Ridable {
     public:
         virtual void get_in(string name, int pos) = 0;
         virtual int drop_all() = 0;
 };
 
-void say_and_go(Drivable& o , Coordinate dest){
+template <class T>
+void say_and_go(Drivable<T>& o , Coordinate<T> dest){
     cout << "go!" << endl;
     o.drive(dest);
 }

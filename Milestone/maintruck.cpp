@@ -16,8 +16,8 @@ int main(){
 
 int main(int argc, char const *argv[])
 {
-    Truck* mack = new Truck();
-    Car* c = mack;
+    Truck<int>* mack = new Truck<int>();
+    Car<int>* c = mack;
     delete c;
 
     return 0;

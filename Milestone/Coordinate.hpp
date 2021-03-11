@@ -1,42 +1,43 @@
 #ifndef COORDINATE_HPP
 #define COORDINATE_HPP
 
+template<class T>
 class Coordinate{
     public:
         Coordinate(){
             x = 0;
             y = 0;
         }
-        Coordinate(int x, int y){
+        Coordinate(T x, T y){
             this->x = x;
             this->y = y;
         }
-        Coordinate(const Coordinate& c){
+        Coordinate(const Coordinate<T>& c){
             x = c.x;
             y = c.y;
         }
-        void operator=(const Coordinate& c){
+        void operator=(const Coordinate<T>& c){
             x = c.x;
             y = c.y;
         }
 
-        void operator+(Coordinate c){
-            return Coordinate(
+        Coordinate<T> operator+(Coordinate<T> c){
+            return Coordinate<T>(
                 this->x + c.x,
                 this->y + c.y
             );
         }
 
         ~Coordinate(){}
-        int get_x() const{
+        T get_x() const{
             return x;
         }
-        int get_y() const{
+        T get_y() const{
             return y;
         }
     private:
-        int x;
-        int y;
+        T x;
+        T y;
 };
 
 #endif
