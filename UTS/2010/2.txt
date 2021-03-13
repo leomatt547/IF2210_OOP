@@ -1,0 +1,40 @@
+Jelaskan masalah yang mungkin muncul pada penggunaan multiple inheritance!
+
+Masalah paling jelas adalah dengan fungsi overriding.
+Katakanlah memiliki dua kelas Adan Bkeduanya mendefinisikan metode doSomething. 
+Sekarang Anda mendefinisikan kelas ketiga C, yang mewarisi dari Adan B, tetapi Anda tidak mengganti doSomethingmetode.
+Ketika kompilator memasukkan kode ini ...
+
+C c = new C();
+c.doSomething();
+... implementasi metode mana yang harus digunakan? Tanpa klarifikasi lebih lanjut, 
+compiler tidak mungkin dapat menyelesaikan ambiguitas tersebut.
+
+Selain menimpa, masalah besar lainnya dengan multiple inheritance adalah tata letak objek fisik dalam memori.
+
+Bahasa seperti C ++ dan Java dan C # membuat tata letak berbasis alamat tetap untuk setiap jenis objek. Sesuatu seperti ini:
+
+class A:
+    at offset 0 ... "abc" ... 4 byte int field
+    at offset 4 ... "xyz" ... 8 byte double field
+    at offset 12 ... "speak" ... 4 byte function pointer
+
+class B:
+    at offset 0 ... "foo" ... 2 byte short field
+    at offset 2 ... 2 bytes of alignment padding
+    at offset 4 ... "bar" ... 4 byte array pointer
+    at offset 8 ... "baz" ... 4 byte function pointer
+Saat compiler menghasilkan kode mesin (atau bytecode), ia menggunakan offset numerik tersebut untuk mengakses setiap metode atau kolom.
+Warisan ganda membuatnya sangat rumit.
+Jika kelas Cmewarisi dari Adan B, kompilator harus memutuskan apakah akan menyusun data secara ABberurutan atau BAberurutan.
+Tapi sekarang bayangkan Anda memanggil metode pada suatu Bobjek. Apakah ini benar-benar hanya a B? 
+Atau apakah itu sebenarnya sebuah Cobjek yang disebut secara polimorfis, melalui Bantarmukanya? 
+Bergantung pada identitas objek yang sebenarnya, 
+tata letak fisik akan berbeda, dan tidak mungkin mengetahui offset fungsi yang akan dipanggil di situs panggilan.
+Cara menangani sistem semacam ini adalah dengan membuang pendekatan tata letak tetap, 
+yang memungkinkan setiap objek ditanyai tata letaknya sebelum mencoba memanggil fungsi atau mengakses bidangnya.
+
+Jadi ... singkat cerita ... sulit bagi penulis kompiler untuk mendukung banyak warisan. 
+Jadi ketika seseorang seperti Guido van Rossum mendesain python, atau ketika Anders Hejlsberg mendesain c #, 
+mereka tahu bahwa mendukung multiple inheritance akan membuat implementasi compiler jauh lebih kompleks, 
+dan mungkin mereka tidak berpikir bahwa keuntungannya sepadan dengan biayanya.
