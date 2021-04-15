@@ -1,0 +1,97 @@
+--- Section 1 ---
+ctor1 Pokemon
+ctor1 GhostPokemon
+ctor1 Pokemon
+ctor1 FightingPokemon
+ctor1 Pokemon
+ctor1 NormalPokemon
+ctor1 Pokemon
+NoName
+NoName
+NoName
+NoName
+ctor2 Pokemon
+ctor2 GhostPokemon
+ctor2 Pokemon
+ctor2 FightingPokemon
+ctor2 Pokemon
+ctor2 NormalPokemon
+ctor2 Pokemon
+Gastly
+Machop
+Rattata
+Big Boss
+Sub Class GhostPokemon
+Sub Class FightingPokemon
+Sub Class NormalPokemon
+Super Class Pokemon
+G1
+12
+--- Section 2 ---
+Gastly have Ghost type
+Machop have Fighting type
+No element for NormalPokemon
+Special skill invisible
+There is fighting spirit around
+There is ominous aura around
+Special skill berserk
+--- Section 3 ---
+Sub Class GhostPokemon
+Sub Class NormalPokemon
+Gastly vs Rattata
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Gastly attack!
+Rattata defense!
+Rattata attack!
+Gastly defense!
+Rattata attack!
+Gastly defense!
+Rattata attack!
+Gastly defense!
+Rattata use skill!
+Gastly use skill!
+Rattata run from battle!
+--- Section 4 ---
+New Battle Found
+Super Class Pokemon
+Sub Class FightingPokemon
+Big Boss vs Machop
+Machop attack!
+Big Boss defense!
+Machop attack!
+Big Boss defense!
+Machop attack!
+Big Boss defense!
+Machop attack!
+Big Boss defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Big Boss attack!
+Machop defense!
+Machop use skill!
+Big Boss use skill!
+Machop run from battle!
+All Battle Finished
