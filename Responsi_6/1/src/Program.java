@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Program extends java.lang.Throwable{
     /**
@@ -40,7 +41,7 @@ public class Program extends java.lang.Throwable{
      * @param line baris yang dipilih.
      */
     public void removeCommand(int line) {
-        lineOfCodes.remove(line);
+        lineOfCodes.remove(line-1);
     }
 
     /**
@@ -62,11 +63,19 @@ public class Program extends java.lang.Throwable{
      * 3. Jika ada error, maka lemparkan CompileErrorException.
      *    Jika tidak ada error sama sekali, tidak melakukan apa-apa.
      */
-    public void compile(){
+    public void compile() throws FileFormatException, CompileErrorException{
         if (!filename.endsWith(".sumatrascript")){
             throw new FileFormatException();
         }
-
+        ArrayList<Integer>error = new ArrayList<Integer>();
+        for(int i = 0; i < lineOfCodes.size(); i++){
+            if (isError(lineOfCodes.get(i))){
+                error.add(i+1);
+            }
+        }
+        if(!error.isEmpty()){
+            throw new CompileErrorException(error);
+        }
     }
 
     /**

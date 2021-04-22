@@ -7,15 +7,15 @@ public class IdentityService extends AbstractService {
     }
     @Override
     public void init() {
-        setServiceState(STATE.INIT);   
+        this.setServiceState(STATE.INIT);   
     }
     @Override
     public void start() {
-        setServiceState(STATE.RUNNING);   
+        this.setServiceState(STATE.RUNNING);   
     }
     @Override
     public void stop() {
-        setServiceState(STATE.DIE);   
+        this.setServiceState(STATE.DIE);   
     }
 
     public ArrayList<String> getIdentity(){
@@ -23,19 +23,19 @@ public class IdentityService extends AbstractService {
     }
 
     public void addIdentity(String a){
-        if (a.equals("RUNNING")){
+        if (this.getServiceState() == STATE.RUNNING){
             identityList.add(a);
         }
     }
 
     public void removeIdentity(String a){
-        if (a.equals("RUNNING")){
+        if (this.getServiceState() == STATE.RUNNING){
             identityList.remove(a);
         }
     }
 
     public Boolean isIdentityExist(String a){
-        if(!a.equals("RUNNING")){
+        if(this.getServiceState() != STATE.RUNNING){
             return null;
         }else{
             if(identityList.contains(a)){

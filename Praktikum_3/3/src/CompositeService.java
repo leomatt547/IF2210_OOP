@@ -7,15 +7,20 @@ public class CompositeService extends AbstractService {
     }
     @Override
     public void init() {
-        setServiceState(STATE.INIT);   
+        this.setServiceState(STATE.INIT);
+        for (AbstractService as : serviceList) {
+            as.init();
+        }
     }
     @Override
     public void start() {
-        setServiceState(STATE.RUNNING);   
+        this.setServiceState(STATE.RUNNING);   
+        for (AbstractService as : serviceList) {
+            as.start();
+        }
     }
     @Override
     public void stop() {
-        setServiceState(STATE.DIE);
         int count = 0;
         for (AbstractService abstractService : serviceList) {
             if(abstractService.getServiceState() == STATE.RUNNING){
@@ -24,6 +29,10 @@ public class CompositeService extends AbstractService {
         }
         System.out.print("RUNNING service total : ");
         System.out.print(count + "\n");
+        this.setServiceState(STATE.DIE);
+        for (AbstractService as : serviceList) {
+            as.stop();
+        }
     }
 
     public ArrayList<AbstractService> getServices(){
@@ -31,13 +40,13 @@ public class CompositeService extends AbstractService {
     }
 
     public void addService(AbstractService a){
-        if (a.getServiceState() != STATE.DIE){
+        if (this.getServiceState() != STATE.DIE){
             serviceList.add(a);
         }
     }
 
     public void removeService(AbstractService a){
-        if (a.getServiceState() != STATE.DIE){
+        if (this.getServiceState() != STATE.DIE){
             serviceList.remove(a);
         }
     }
